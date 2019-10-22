@@ -29,17 +29,19 @@ export default class Login extends Component {
                 if(response.ok) {
                     return response.text();
                 } else {
-                    this.setState({msg:'não foi possível fazer o login'})
+                    // criamos um novo erro, para interromper o fluxo
+                    throw new Error('não foi possível fazer o login');
                 }
             })
             .then(token => {
-                // localStorage.setItem('auth-token',token);
-                // browserHistory.push('/timeline');
+                localStorage.setItem('auth-token',token);
+                browserHistory.push('/timeline');
                 console.log(token)
             })
-            // .catch(error => {
-            //     this.setState({msg:error.message});
-            // });
+
+            .catch(error => {
+                this.setState({msg:error.message});
+            });
     }
 
     render(){
